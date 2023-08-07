@@ -10,6 +10,7 @@ class MainPage(BasePage):
 
     def visit(self):
         self.driver.get(MainPage.URL)
+        self.driver.set_window_size(1100, 700)
 
     def search_item(self, name):
         search_input = self.driver.find_element(By.NAME, "search")
@@ -45,3 +46,15 @@ class MainPage(BasePage):
         sum = int(sum_element.text.replace(' ', '')[:-1])
 
         return sum == (first_price + second_price)
+
+    def open_catalogue_menu(self):
+        catalogue_button = self.driver.find_element(By.ID, "fat-menu")
+        catalogue_button.click()
+
+    def select_category_by_name(self, name):
+        category = self.driver.find_element(By.LINK_TEXT, name)
+        category.click()
+
+    def check_category_heading(self, expected_name):
+        heading = self.driver.find_element(By.CLASS_NAME, "portal__heading")
+        return heading.text == expected_name
