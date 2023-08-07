@@ -25,6 +25,31 @@ class Database():
         record = self.cursor.fetchall()
         return record
     
+    def insert_user(self, user_id, name, address, city, postalCode, country):
+        query = f"INSERT OR REPLACE INTO customers (id, name, address, city, postalCode, country) \
+            VALUES ({user_id}, '{name}', '{address}', '{city}', '{postalCode}', '{country}')"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def update_place_of_residence_by_name(self, name, new_address, new_city, new_postalCode, new_country):
+        query = f"UPDATE customers SET address = '{new_address}', city = '{new_city}', postalCode = '{new_postalCode}', country = '{new_country}' \
+            WHERE name = '{name}'"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def sorted_users_by_name(self):
+        query = f"SELECT * FROM customers \
+            ORDER BY name;"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+        return record
+    
+    def number_of_customers(self):
+        query = f"SELECT COUNT(*) FROM customers"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+        return record
+
     def update_product_qnt_by_id(self, product_id, qnt):
         query = f"UPDATE products SET quantity = {qnt} WHERE id = {product_id}"
         self.cursor.execute(query)
