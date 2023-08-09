@@ -104,7 +104,6 @@ def test_detailed_orders():
     print("Orders", orders)
 
     assert len(orders) == 1
-
     assert orders[0][0] == 1
     assert orders[0][1] == 'Sergii'
     assert orders[0][2] == 'солодка вода'
