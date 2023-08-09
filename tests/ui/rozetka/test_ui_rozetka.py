@@ -7,39 +7,39 @@ CATEGORYNAME = "Ноутбуки та комп’ютери"
 CATEGORYHEADERTEXT = "Комп'ютери та ноутбуки"
 
 
-# @pytest.mark.rozetka
-# def test_search_item():
-#     main_page = MainPage()
+@pytest.mark.rozetka
+def test_search_item():
+    main_page = MainPage()
 
-#     main_page.visit()
-#     main_page.search_item(BICYCLE)
+    main_page.visit()
+    main_page.search_item(BICYCLE)
 
-#     assert main_page.check_item_name(BICYCLE)
+    assert main_page.check_item_name(BICYCLE)
 
 
-# @pytest.mark.rozetka
-# def test_add_item_to_basket():
-#     main_page = MainPage()
+@pytest.mark.rozetka
+def test_add_item_to_basket():
+    main_page = MainPage()
 
-#     main_page.visit()
-#     main_page.search_item(BICYCLE)
-#     main_page.add_item_to_basket()
+    main_page.visit()
+    main_page.search_item(BICYCLE)
+    main_page.add_item_to_basket()
     
-#     assert main_page.check_product_added_to_cart(1)
+    assert main_page.check_product_added_to_cart(1)
 
 
-# @pytest.mark.rozetka
-# def test_check_sum_in_basket():
-#     main_page = MainPage()
+@pytest.mark.rozetka
+def test_check_sum_in_basket():
+    main_page = MainPage()
 
-#     main_page.visit()
-#     main_page.search_item(BICYCLE)
-#     main_page.add_item_to_basket()
-#     main_page.search_item(PHONE)
-#     main_page.add_item_to_basket()
-#     main_page.open_shopping_cart()
+    main_page.visit()
+    main_page.search_item(BICYCLE)
+    main_page.add_item_to_basket()
+    main_page.search_item(PHONE)
+    main_page.add_item_to_basket()
+    main_page.open_shopping_cart()
     
-#     assert main_page.check_sum_in_basket()
+    assert main_page.check_sum_in_basket()
 
 
 @pytest.mark.rozetka

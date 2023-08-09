@@ -1,5 +1,7 @@
-from modules.ui.page_objects.base_page import BasePage
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from modules.ui.page_objects.base_page import BasePage
 
 
 class MainPage(BasePage):
@@ -10,8 +12,19 @@ class MainPage(BasePage):
         super().__init__()
 
 
+    def __format_conversion(expression):
+        
+        return int(expression.text.replace(' ', '')[:-1])
+
+
     def visit(self):
         self.driver.get(MainPage.URL)
+
+    
+    def wait_element(self, selector, selector_value):
+        wait = WebDriverWait(self.driver, 10)
+
+        return wait.until(EC.presence_of_element_located((selector, selector_value)))
 
 
     def search_item(self, name):
@@ -22,7 +35,9 @@ class MainPage(BasePage):
     
 
     def add_item_to_basket(self):
-        basket_icon = self.driver.find_element(By.CLASS_NAME, "goods-tile__buy-button")
+        # wait = WebDriverWait(self.driver, 10)
+        # basket_icon = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "goods-tile__buy-button")))
+        basket_icon = MainPage.wait_element(self, By.CLASS_NAME, "goods-tile__buy-button")
         basket_icon.click()
     
 
@@ -50,22 +65,24 @@ class MainPage(BasePage):
 
     
     def check_product_added_to_cart(self, quantityOfGoods):
-        badge_inserted = self.driver.find_element(By.CSS_SELECTOR, ".badge.badge--green.ng-star-inserted")
-        
+        badge_inserted = MainPage.wait_element(self,By.CSS_SELECTOR, ".badge.badge--green.ng-star-inserted")
+
         return int(badge_inserted.text) == quantityOfGoods
-
-
-    def check_category_heading(self, expected_name):
-        heading = self.driver.find_element(By.CLASS_NAME, "portal__heading")
-        
-        return heading.text == expected_name
     
 
     def check_sum_in_basket(self):
-        price_elements = self.driver.find_elements(By.CSS_SELECTOR, ".cart-product__price.cart-product__price--red")
-        first_price = int(price_elements[0].text.replace(' ', '')[:-1])
-        second_price = int(price_elements[1].text.replace(' ', '')[:-1])
-        sum_element = self.driver.find_element(By.CSS_SELECTOR, ".cart-receipt__sum-price")
-        sum = int(sum_element.text.replace(' ', '')[:-1])
+        MainPage.wait_element(self, By.CSS_SELECTOR, ".cart-product__price.cart-product__price--red")
 
+        price_elements = self.driver.find_elements(By.CSS_SELECTOR, ".cart-product__price.cart-product__price--red")
+        first_price = MainPage.__format_conversion(price_elements[0])
+        second_price = MainPage.__format_conversion(price_elements[1])
+        sum_element = self.driver.find_element(By.CSS_SELECTOR, ".cart-receipt__sum-price")
+        sum = MainPage.__format_conversion(sum_element)
+        
         return sum == (first_price + second_price)
+    
+
+    def check_category_heading(self, expected_name):
+        heading = MainPage.wait_element(self, By.CLASS_NAME, "portal__heading")
+        
+        return heading.text == expected_name

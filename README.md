@@ -12,7 +12,7 @@ pytest
 
 **Run tests in a directory**
 ```
-pytest directory_name/
+pytest directory_path/
 ```
 
 **Run tests by marker expressions**
